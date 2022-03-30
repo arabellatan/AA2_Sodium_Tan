@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>GWA Calculator</title>
+
+        <meta charset="utf-8">
+        <meta name="author" content="Arabella Tan">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="revised" content="3-30-2022">
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <!-- Header -->
+      
+        <h1>GWA Calculator</h1>
+        <p>Input your requirement scores and previous grades to calculate your tentative grades, final grades, average final grade, and GWA!</p>
+        <br>
+        <br>
+
+        <!-- Input from user -->
+      
+        <h2>Student Information</h2>
+        <p>Name: <input type="text" id="name"></p>
+        <p>Section and Class Number: <input type="text" id="sectionCn"></p>
+        <br>
+      
+        <h2>Subject 1</h2>
+        <p>Requirement #1 (HPS: 20): <input type="text" id="s1req1"></p>
+        <p>Requirement #2 (HPS: 30): <input type="text" id="s1req2"></p>
+        <p>Requirement #1 (HPS: 50): <input type="text" id="s1req3"></p>
+        <p>Previous Final Grade: <input type="text" id="s1prev"></p>
+        <br>
+      
+        <h2>Subject 2</h2>
+        <p>Requirement #1 (HPS: 20): <input type="text" id="s2req1"></p>
+        <p>Requirement #2 (HPS: 30): <input type="text" id="s2req2""></p>
+        <p>Requirement #1 (HPS: 50): <input type="text" id="s2req3"></p>
+        <p>Previous Final Grade: <input type="text" id="s2prev"></p>
+        <br>
+      
+        <h2>Subject 3</h2>
+        <p>Requirement #1 (HPS: 20): <input type="text" id="s3req1"></p>
+        <p>Requirement #2 (HPS: 30): <input type="text" id="s3req2"></p>
+        <p>Requirement #1 (HPS: 50): <input type="text" id="s3req3"></p>
+        <p>Previous Final Grade: <input type="text" id="s3prev"></p>
+        <br>
+
+        <!-- Button -->
+      
+        <button onclick="getResults()">Click here to caclulate your grades!</button>
+        <br>
+        <br>
+        <hr>
+
+        <!-- Generated Results -->
+
+        <h2 id="studentInfoTxt"></h2>
+        <p id="nameTxt"></p> 
+        <p id="sectionCnTxt"></p>
+        <br>
+      
+        <h2 id="tentaGradesTxt"></h2>
+        <p id="tentaSubj1Txt"></p>
+        <p id="tentaSubj2Txt"></p>
+        <p id="tentaSubj3Txt"></p>
+        <br>
+      
+        <h2 id="finalGradesTxt"></h2>
+        <p id="finalSubj1Txt"></p>
+        <p id="finalSubj2Txt"></p>
+        <p id="finalSubj3Txt"></p>
+        <br>
+
+        <h2 id="avgFinalTxt"></h2>
+        <p id="avgGradeTxt"></p>
+        <br>
+      
+        <h3 id="gwaTxt"></h3>
+        <br>
+
+        <!-- JavaScript -->
+      
+        <script>
+          function getResults() {
+            // Initial Variable Declarations
+            
+            let name = document.getElementById("name").value;
+            let sectionCn = document.getElementById("sectionCn").value;
+
+            let s1req1 = document.getElementById("s1req1").value;
+            let s1req2 = document.getElementById("s1req2").value;
+            let s1req3 = document.getElementById("s1req3").value;
+            let s1prev = document.getElementById("s1prev").value;
+            
+            let s2req1 = document.getElementById("s2req1").value;
+            let s2req2 = document.getElementById("s2req2").value;
+            let s2req3 = document.getElementById("s2req3").value;
+            let s2prev = document.getElementById("s2prev").value;
+            
+            let s3req1 = document.getElementById("s3req1").value;
+            let s3req2 = document.getElementById("s3req2").value;
+            let s3req3 = document.getElementById("s3req3").value;
+            let s3prev = document.getElementById("s3prev").value;
+
+            // Tentative Grade Calculation
+            
+            function getTenta(score1, score2, score3) {
+              let tenta;
+              let perc = (parseFloat(score1) + parseFloat(score2) + parseFloat(score3)) / 100;
+              
+              switch(true) {
+                case perc<0.40:
+                    tenta = "5.00"
+                    break;
+                case perc<0.50:
+                    tenta = "4.00"
+                    break;
+                case perc<0.55:
+                    tenta = "3.00"
+                    break;
+                case perc<0.60:
+                    tenta = "2.75"
+                    break;
+                case perc<0.66:
+                    tenta = "2.50"
+                    break;
+                case perc<0.72:
+                    tenta = "2.25"
+                    break;
+                case perc<0.78:
+                    tenta = "2.00"
+                    break;
+                case perc<0.84:
+                    tenta = "1.75"
+                    break;
+                case perc<0.90:
+                    tenta = "1.50"
+                    break;
+                case perc<0.96:
+                    tenta = "1.25"
+                    break;
+                case perc>=0.96:
+                    tenta = "1.00"
+                    break;
+                default:
+                    tenta = "Error"
+              }
+              return tenta;
+            }
+
+            // Final Grade Calculation
+          
+            function getFinal(tenta, prev) {
+              let x = ((2 * parseFloat(tenta) + parseFloat(prev)) / 3);
+
+              
+              switch(true) {
+                case x>4.500:
+                    finalGrade = "5.00"
+                    break;
+                case x>3.500:
+                    finalGrade = "4.00"
+                    break;
+                case x>2.875:
+                    finalGrade = "3.00"
+                    break;
+                case x>2.625:
+                    finalGrade = "2.75"
+                    break;
+                case x>2.375:
+                    finalGrade = "2.50"
+                    break;
+                case x>2.125:
+                    finalGrade = "2.25"
+                    break;
+                case x>1.875:
+                    finalGrade = "2.00"
+                    break;
+                case x>1.625:
+                    finalGrade = "1.75"
+                    break;
+                case x>1.375:
+                    finalGrade = "1.50"
+                    break;
+                case x>1.125:
+                    finalGrade = "1.25"
+                    break;
+                case x<=1.125:
+                    finalGrade = "1.00"
+                    break;
+                default:
+                    finalGrade = "Error"
+              }
+              return finalGrade;
+            }
+
+            // Average Final Grade Calculation
+
+            function getAvgFinal(final1, final2, final3) {
+              let avgFinalGrade = (parseFloat(final1) + parseFloat(final2) + parseFloat(final3)) / 3;
+              
+              return avgFinalGrade;
+            }
+
+            // GWA Calculation
+
+            function getGWA(final1, final2, final3, prev1, prev2, prev3) {
+              let a = parseFloat(final1) + parseFloat(final2) + parseFloat(final3);
+              let b = parseFloat(prev1) + parseFloat(prev2) + parseFloat(prev3);
+              let x = a / 3;
+              let y = b / 3;
+              let gwa = (2/3 * x) + (1/3 * y);
+              
+              return gwa;
+            }
+
+            // Calculated Variables
+            
+            let s1tenta = getTenta(s1req1, s1req2, s1req3);
+            let s2tenta = getTenta(s2req1, s2req2, s2req3);
+            let s3tenta = getTenta(s3req1, s3req2, s3req3);
+
+            let s1final = getFinal(s1tenta, s1prev);
+            let s2final = getFinal(s2tenta, s2prev);
+            let s3final = getFinal(s3tenta, s3prev);
+
+            let avgFinal = getAvgFinal(s1final, s2final, s3final);
+            let GWA = getGWA(s1final, s2final, s3final, s1prev, s2prev, s3prev);
+
+            // Generated Results
+            
+            document.getElementById("studentInfoTxt").innerHTML = "Student Information";
+            document.getElementById("nameTxt").innerHTML = "Name: " + name;
+            document.getElementById("sectionCnTxt").innerHTML = "Section and Class Number: " + sectionCn;
+
+            document.getElementById("tentaGradesTxt").innerHTML = "Tentative Grades";
+            document.getElementById("tentaSubj1Txt").innerHTML = "Subject 1 Grade: " + s1tenta;
+            document.getElementById("tentaSubj2Txt").innerHTML = "Subject 2 Grade: " + s2tenta;
+            document.getElementById("tentaSubj3Txt").innerHTML = "Subject 3 Grade: " + s3tenta;
+
+            document.getElementById("finalGradesTxt").innerHTML = "Final Grades";
+            document.getElementById("finalSubj1Txt").innerHTML = "Subject 1 Grade: " + s1final;
+            document.getElementById("finalSubj2Txt").innerHTML = "Subject 2 Grade: " + s2final;
+            document.getElementById("finalSubj3Txt").innerHTML = "Subject 3 Grade: " + s3final;
+
+            document.getElementById("avgFinalTxt").innerHTML = "Average Final Grade";
+            document.getElementById("avgGradeTxt").innerHTML = "Average Final Grade: " + avgFinal;
+              
+            document.getElementById("gwaTxt").innerHTML = "Your GWA is " + GWA;
+          }
+
+        </script>
+    </body>
+</html>
